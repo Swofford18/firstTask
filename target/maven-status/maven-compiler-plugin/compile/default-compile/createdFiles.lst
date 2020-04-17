@@ -1,0 +1,7 @@
+servlets\CreateUserServlet.class
+dao\UserDAO.class
+servlets\AllUsersServlet.class
+service\UserService.class
+servlets\DeleteUserServlet.class
+model\User.class
+servlets\UpdateUserServlet.class
