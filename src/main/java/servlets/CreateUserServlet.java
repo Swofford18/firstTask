@@ -28,7 +28,7 @@ public class CreateUserServlet extends HttpServlet {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
 
-        if (new UserService().createUser(new User(age, name, password))) {
+        if (UserService.getInstance().createUser(new User(age, name, password))) {
             resp.setStatus(200);
         }
         else {

@@ -1,7 +1,10 @@
 package service;
 
-import dao.UserDAO;
+import dao.UserHibernateDAO;
+import dao.UserJdbcDAO;
 import model.User;
+import org.hibernate.SessionFactory;
+import util.DBHelper;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -10,20 +13,35 @@ import java.util.List;
 
 public class UserService {
 
+    private static UserService userService;
+
+    private SessionFactory sessionFactory;
+
+    public UserService(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public static UserService getInstance() {
+        if (userService == null) {
+            userService = new UserService(DBHelper.getSessionFactory());
+        }
+        return userService;
+    }
+
     public boolean updateUser(User user) {
-        return getUserDAO().updateUser(user);
+        return new UserHibernateDAO(sessionFactory.openSession()).updateUser(user);
     }
 
     public boolean deleteUser(String name) {
-        return getUserDAO().deleteUser(name);
+        return new UserHibernateDAO(sessionFactory.openSession()).deleteUser(name);
     }
 
     public boolean createUser(User user) {
-        return getUserDAO().createUser(user);
+        return new UserHibernateDAO(sessionFactory.openSession()).createUser(user);
     }
 
     public List<User> getAllUsers() {
-        return getUserDAO().getAllUsers();
+        return new UserHibernateDAO(sessionFactory.openSession()).getAllUsers();
     }
 
     private static Connection getConnection() {
@@ -51,7 +69,7 @@ public class UserService {
         }
     }
 
-    private static UserDAO getUserDAO() {
-        return new UserDAO(getConnection());
+    private static UserJdbcDAO getUserJdbcDAO() {
+        return new UserJdbcDAO(getConnection());
     }
 }

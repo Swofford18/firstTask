@@ -27,7 +27,7 @@ public class UpdateUserServlet extends HttpServlet {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
 
-        if (new UserService().updateUser(new User(age, name, password))) {
+        if (UserService.getInstance().updateUser(new User(age, name, password))) {
             resp.setStatus(200);
         }
         else {

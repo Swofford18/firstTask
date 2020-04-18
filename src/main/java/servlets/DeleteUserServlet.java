@@ -23,7 +23,7 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("name");
-        if (new UserService().deleteUser(name)) {
+        if (UserService.getInstance().deleteUser(name)) {
             resp.setStatus(200);
         }
         else {

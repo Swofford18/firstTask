@@ -1,10 +1,28 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
-    long id;
-    int age;
-    String name;
-    String password;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "age")
+    private int age;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "password")
+    private String password;
+
+    public User() {
+
+    }
 
     public User(long id, int age, String name, String password) {
         this.id = id;
