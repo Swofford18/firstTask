@@ -1,5 +1,6 @@
 package servlets;
 
+import dao.UserDaoFactory;
 import model.User;
 import service.UserService;
 
@@ -16,6 +17,9 @@ public class AllUsersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        UserDaoFactory aaa = new UserDaoFactory();
+        aaa.createDAO();
 
         List<User> list = UserService.getInstance().getAllUsers();
         req.setAttribute("users", list);

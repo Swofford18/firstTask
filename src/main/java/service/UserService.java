@@ -1,5 +1,6 @@
 package service;
 
+import dao.UserDaoFactory;
 import dao.UserHibernateDAO;
 import dao.UserJdbcDAO;
 import model.User;
@@ -15,61 +16,29 @@ public class UserService {
 
     private static UserService userService;
 
-    private SessionFactory sessionFactory;
-
-    public UserService(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    private UserService() {
     }
 
     public static UserService getInstance() {
         if (userService == null) {
-            userService = new UserService(DBHelper.getSessionFactory());
+            userService = new UserService();
         }
         return userService;
     }
 
     public boolean updateUser(User user) {
-        return new UserHibernateDAO(sessionFactory.openSession()).updateUser(user);
+        return new UserDaoFactory().createDAO().updateUser(user);
     }
 
     public boolean deleteUser(String name) {
-        return new UserHibernateDAO(sessionFactory.openSession()).deleteUser(name);
+        return new UserDaoFactory().createDAO().deleteUser(name);
     }
 
     public boolean createUser(User user) {
-        return new UserHibernateDAO(sessionFactory.openSession()).createUser(user);
+        return new UserDaoFactory().createDAO().createUser(user);
     }
 
     public List<User> getAllUsers() {
-        return new UserHibernateDAO(sessionFactory.openSession()).getAllUsers();
-    }
-
-    private static Connection getConnection() {
-        try {
-            DriverManager.registerDriver((Driver) Class.forName("com.mysql.cj.jdbc.Driver").newInstance());
-
-            StringBuilder url = new StringBuilder();
-
-            url.
-                    append("jdbc:mysql://").        //db type
-                    append("localhost:").           //host name
-                    append("3306/").                //port
-                    append("db_example?").          //db name
-                    append("user=root&").          //login
-                    append("password=root");       //password
-
-            System.out.println("URL: " + url + "\n");
-
-            Connection connection = DriverManager.getConnection(url.toString());
-            return connection;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalStateException();
-        }
-    }
-
-    private static UserJdbcDAO getUserJdbcDAO() {
-        return new UserJdbcDAO(getConnection());
+        return new UserDaoFactory().createDAO().getAllUsers();
     }
 }
