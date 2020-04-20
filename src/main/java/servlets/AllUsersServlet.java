@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-@WebServlet("/")
+@WebServlet("/allUsers")
 public class AllUsersServlet extends HttpServlet {
 
     @Override
@@ -24,7 +24,7 @@ public class AllUsersServlet extends HttpServlet {
         List<User> list = UserService.getInstance().getAllUsers();
         req.setAttribute("users", list);
 
-        req.getRequestDispatcher("mypage.jsp").forward(req, resp);
+        req.getRequestDispatcher("all_users.jsp").forward(req, resp);
     }
 
     @Override
