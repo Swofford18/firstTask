@@ -26,6 +26,14 @@ public class UserService {
         return userService;
     }
 
+    public String getRoleByName(String name) {
+        return new UserDaoFactory().createDAO().getRoleByName(name);
+    }
+
+    public boolean validate(String name, String password) {
+        return new UserDaoFactory().createDAO().validate(name, password);
+    }
+
     public boolean updateUser(User user) {
         return new UserDaoFactory().createDAO().updateUser(user);
     }

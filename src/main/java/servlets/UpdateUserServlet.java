@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/updateUser")
+@WebServlet("/admin/updateUser")
 public class UpdateUserServlet extends HttpServlet {
 
     @Override
@@ -26,12 +26,14 @@ public class UpdateUserServlet extends HttpServlet {
         int age = Integer.parseInt(req.getParameter("age"));
         String name = req.getParameter("name");
         String password = req.getParameter("password");
+        String role = req.getParameter("role");
 
-        if (UserService.getInstance().updateUser(new User(age, name, password))) {
+        if (UserService.getInstance().updateUser(new User(age, name, password, role))) {
             resp.setStatus(200);
         }
         else {
             resp.setStatus(400);
         }
+        req.getRequestDispatcher("/admin").forward(req, resp);
     }
 }

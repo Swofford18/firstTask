@@ -12,11 +12,12 @@ import java.io.PrintWriter;
 
 import model.User;
 
-@WebServlet("/createUser")
+@WebServlet("/admin/createUser")
 public class CreateUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         PrintWriter pw = resp.getWriter();
         pw.println("get createUser");
     }
@@ -27,12 +28,14 @@ public class CreateUserServlet extends HttpServlet {
         int age = Integer.parseInt(req.getParameter("age"));
         String name = req.getParameter("name");
         String password = req.getParameter("password");
+        String role = req.getParameter("role");
 
-        if (UserService.getInstance().createUser(new User(age, name, password))) {
+        if (UserService.getInstance().createUser(new User(age, name, password, role))) {
             resp.setStatus(200);
         }
         else {
             resp.setStatus(400);
         }
+        req.getRequestDispatcher("/admin").forward(req, resp);
     }
 }

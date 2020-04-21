@@ -15,13 +15,28 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
+    public String getRoleByName(String name) {
+        User user = (User) session.createQuery("FROM User WHERE name = '" + name +"'").uniqueResult();
+        session.close();
+        return user.getRole();
+    }
+
+    public boolean validate(String name, String password) {
+        User user = (User) session.createQuery("FROM User WHERE name = '" + name +"'").uniqueResult();
+        session.close();
+        return user != null && password.equals(user.getPassword());
+    }
+
+    @Override
     public boolean updateUser(User user) {
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("UPDATE User SET " +
                 "age = :age " +
+                ", role = :role " +
                 ", password = :password " +
                 "WHERE name = :name");
         query.setParameter("age", user.getAge());
+        query.setParameter("role", user.getRole());
         query.setParameter("password", user.getPassword());
         query.setParameter("name", user.getName());
         int result = query.executeUpdate();

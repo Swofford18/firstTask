@@ -9,4 +9,6 @@ public interface UserDAO {
     boolean createUser(User user);
     boolean deleteUser(String name);
     List<User> getAllUsers();
+    boolean validate(String name, String password);
+    String getRoleByName(String name);
 }

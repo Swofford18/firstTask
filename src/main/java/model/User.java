@@ -34,10 +34,11 @@ public class User {
         this.password = password;
     }
 
-    public User(int age, String name, String password) {
+    public User(int age, String name, String password, String role) {
         this.age = age;
         this.name = name;
         this.password = password;
+        this.role = role;
     }
 
     public long getId() {
@@ -72,6 +73,14 @@ public class User {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -79,6 +88,7 @@ public class User {
                 ", age=" + age +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

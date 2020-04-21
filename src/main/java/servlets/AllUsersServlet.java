@@ -12,14 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-@WebServlet("/allUsers")
+@WebServlet("/admin/allUsers")
 public class AllUsersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        UserDaoFactory aaa = new UserDaoFactory();
-        aaa.createDAO();
+
 
         List<User> list = UserService.getInstance().getAllUsers();
         req.setAttribute("users", list);

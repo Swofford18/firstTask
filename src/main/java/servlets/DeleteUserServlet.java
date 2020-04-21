@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/deleteUser")
+@WebServlet("/admin/deleteUser")
 public class DeleteUserServlet extends HttpServlet {
 
     @Override
@@ -29,5 +29,6 @@ public class DeleteUserServlet extends HttpServlet {
         else {
             resp.setStatus(400);
         }
+        req.getRequestDispatcher("/admin").forward(req, resp);
     }
 }
